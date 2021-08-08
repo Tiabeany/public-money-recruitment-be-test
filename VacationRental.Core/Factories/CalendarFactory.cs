@@ -6,9 +6,12 @@ namespace VacationRental.Core.Factories
 {
     public static class CalendarFactory
     {
-        public static Calendar CreateCalendar(List<Booking> allRentalBookings, int nights, int rentalId, DateTime start)
+        public static Calendar CreateCalendar(List<Booking> allRentalBookings, int nights, Rental rental, DateTime start)
         {
-            var calendar = new Calendar(new List<CalendarDate>(), rentalId);
+            if (nights < 0)
+                throw new ApplicationException("Nights must be positive");
+
+            var calendar = new Calendar(new List<CalendarDate>(), rental.Id);
 
             for (var i = 0; i < nights; i++)
             {
