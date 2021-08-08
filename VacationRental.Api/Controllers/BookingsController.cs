@@ -28,15 +28,14 @@ namespace VacationRental.Api.Controllers
                 Id = booking.Id,
                 Nights = booking.Nights,
                 RentalId = booking.RentalId,
-                Start = booking.Start,
-                Unit = booking.Unit
+                Start = booking.Start
             };
         }
 
         [HttpPost]
         public ResourceIdViewModel Post(BookingBindingModel model)
         {
-            var id = _bookingService.Add(new Booking(0, model.RentalId, model.Start, model.Nights, model.Unit));
+            var id = _bookingService.Add(new Booking(0, model.RentalId, model.Start, model.Nights, 0));
 
             return new ResourceIdViewModel
             {

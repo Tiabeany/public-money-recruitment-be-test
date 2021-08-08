@@ -30,7 +30,8 @@ namespace VacationRental.Api.Controllers
                         Date = d.Date,
                         Bookings = d.Bookings.Select(b => new CalendarBookingViewModel() { Id = b.Id }).ToList()
                     }
-                ).ToList()
+                ).ToList(),
+                RentalId = calendar.RentalId
             };
         }
     }
