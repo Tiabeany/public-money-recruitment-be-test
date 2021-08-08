@@ -13,7 +13,7 @@ namespace VacationRental.Core.Models
 
         public Rental Rental { get; set; }
 
-        public Schedule(int rentalId, DateTime start, int nights, int unit)
+        public Schedule(int id, int rentalId, DateTime start, int nights, int unit) : base(id)
         {
             RentalId = rentalId;
             Start = start;
