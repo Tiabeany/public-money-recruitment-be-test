@@ -1,8 +1,6 @@
-﻿using VacationRental.Core.Models.Interfaces;
-
-namespace VacationRental.Core.Models
+﻿namespace VacationRental.Core.Models
 {
-    public class BaseEntity : IBaseEntity
+    public class BaseEntity
     {
         public int Id { get; set; }
     }
