@@ -38,7 +38,9 @@ namespace VacationRental.Core.Models
                 throw ex;
             }
 
-            var preparationTimeAfterBooking = new PreparationTime(0, booking.RentalId, booking.Start.AddDays(booking.Nights), booking.Rental.PreparationTimeInDays, booking.Unit);
+            var preparationTimeStart = booking.Start.AddDays(booking.Rental.PreparationTimeInDays);
+            var preparationTimeAfterBooking = new PreparationTime(0, booking.RentalId, preparationTimeStart, 
+                booking.Rental.PreparationTimeInDays, booking.Unit);
 
             try
             {
@@ -69,17 +71,34 @@ namespace VacationRental.Core.Models
             PreparationTimes.Add(preparationTime);
         }
 
+        private void UpdatePreparationTimes(int daysToAdd)
+        {
+            foreach (var preparationTime in PreparationTimes)
+            {
+                preparationTime.Nights += daysToAdd;
+
+                var scheduleAvailable = new ScheduleAvailableSpecification(_allExistingSchedules);
+                if (!scheduleAvailable.IsSatisfiedBy(preparationTime))
+                {
+                    // reverting update
+                    preparationTime.Nights -= daysToAdd;
+                    throw new ApplicationException("Not available");
+                }
+            }
+        }
+
         public void UpdatePreparationTimeInDays(int newPreparationTimeInDays)
         {
             if (PreparationTimeInDays != newPreparationTimeInDays)
             {
-                var daysDifference = PreparationTimeInDays - newPreparationTimeInDays;
+                var daysDifference = newPreparationTimeInDays - PreparationTimeInDays;
+                UpdatePreparationTimes(daysDifference);
             }
         }
 
         public void UpdateUnits(int newUnits)
         {
-            throw new NotImplementedException();
+            Units = newUnits;
         }
     }
 }
