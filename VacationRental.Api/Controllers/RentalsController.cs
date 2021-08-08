@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using VacationRental.Api.Models;
 using VacationRental.Application.Services.Interfaces;
 using VacationRental.Core.Models;
@@ -33,11 +34,7 @@ namespace VacationRental.Api.Controllers
         [HttpPost]
         public ResourceIdViewModel Post(RentalBindingModel model)
         {
-            var id = _rentalService.Add(new Rental
-            {
-                PreparationTimeInDays = model.PreparationTimeInDays,
-                Units = model.Units
-            });
+            var id = _rentalService.Add(new Rental(model.PreparationTimeInDays, model.Units, new List<Booking>()));
 
             return new ResourceIdViewModel
             {
