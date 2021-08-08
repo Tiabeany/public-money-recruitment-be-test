@@ -21,7 +21,7 @@ namespace VacationRental.Application.Services
         {
             var allRentalBookings = _bookingRepository.GetByRentalId(rentalId);
             var rental = _rentalRepository.Get(rentalId);
-            return CalendarFactory.CreateCalendar(allRentalBookings, nights, rental, start);
+            return CalendarFactory.CreateCalendar(nights, rental, start);
         }
     }
 }
