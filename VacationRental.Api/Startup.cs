@@ -33,9 +33,12 @@ namespace VacationRental.Api
             services.AddSingleton<IDictionary<int, Rental>>(new Dictionary<int, Rental>());
             services.AddTransient<IRentalRepository, RentalRepository>();
             services.AddTransient<IRentalService, RentalService>();
-            services.AddSingleton<IDictionary<int, BookingViewModel>>(new Dictionary<int, BookingViewModel>());
+
+            services.AddSingleton<IDictionary<int, Booking>>(new Dictionary<int, Booking>());
             services.AddTransient<IBookingRepository, BookingRepository>();
             services.AddTransient<IBookingService, BookingService>();
+
+            services.AddTransient<ICalendarService, CalendarService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
