@@ -21,25 +21,8 @@ namespace VacationRental.Application.Services
             if (booking.Nights <= 0)
                 throw new ApplicationException("Nights must be positive");
 
-            booking.Rental = _rentalRepository.Get(booking.RentalId);
-
-            for (var i = 0; i < booking.Nights; i++)
-            {
-                var count = 0;
-                var allBookings = _bookingRepository.GetAll();
-                foreach (var existingBooking in allBookings)
-                {
-                    if (existingBooking.RentalId == booking.RentalId
-                        && (existingBooking.Start <= booking.Start.Date && existingBooking.Start.AddDays(existingBooking.Nights) > booking.Start.Date)
-                        || (existingBooking.Start < booking.Start.AddDays(booking.Nights) && existingBooking.Start.AddDays(existingBooking.Nights) >= booking.Start.AddDays(booking.Nights))
-                        || (existingBooking.Start > booking.Start && existingBooking.Start.AddDays(existingBooking.Nights) < booking.Start.AddDays(booking.Nights)))
-                    {
-                        count++;
-                    }
-                }
-                if (count >= booking.Rental.Units)
-                    throw new ApplicationException("Not available");
-            }
+            booking.Rental = _rentalRepository.Get(booking.RentalId);            
+            booking.Rental.AddBooking(booking);
 
             return _bookingRepository.Insert(booking);
         }
