@@ -31,15 +31,15 @@ namespace VacationRental.Infrastructure.Repositories
         public int Insert(Rental entity)
         {
             var id = _rentals.Keys.Count + 1;
-            entity.Id = id;
-
+            entity.SetId(id);
             _rentals.Add(id, entity);
             return id;
         }
 
         public int Update(Rental entity)
         {
-            throw new System.NotImplementedException();
+            _rentals[entity.Id] = entity;
+            return entity.Id;
         }
     }
 }

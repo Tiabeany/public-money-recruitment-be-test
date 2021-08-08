@@ -36,8 +36,7 @@ namespace VacationRental.Infrastructure.Repositories
         public int Insert(PreparationTime entity)
         {
             var id = _preparationTimes.Keys.Count + 1;
-            entity.Id = id;
-
+            entity.SetId(id);
             _preparationTimes.Add(id, entity);
             return id;
         }

@@ -15,7 +15,7 @@ namespace VacationRental.Core.Tests
             var now = DateTime.Now;
             var mockedBookings = new List<Booking>
             {
-                new Booking(1, now, 2, 1)
+                new Booking(1, 1, now, 2, 1)
             };
             var mockedRental = new Rental(1, 1, 2, new List<Booking>(), new List<PreparationTime>());
 

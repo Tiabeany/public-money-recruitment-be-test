@@ -36,8 +36,7 @@ namespace VacationRental.Infrastructure.Repositories
         public int Insert(Booking entity)
         {
             var id = _bookings.Keys.Count + 1;
-            entity.Id = id;
-
+            entity.SetId(id);
             _bookings.Add(id, entity);
             return id;
         }

@@ -25,7 +25,10 @@ namespace VacationRental.Application.Services
 
         public int Update(Rental rental)
         {
-            return _rentalRepository.Update(rental);
+            var existingRental = _rentalRepository.Get(rental.Id);
+            existingRental.UpdatePreparationTimeInDays(rental.PreparationTimeInDays);
+            existingRental.UpdateUnits(rental.Units);
+            return _rentalRepository.Update(existingRental);
         }
     }
 }
