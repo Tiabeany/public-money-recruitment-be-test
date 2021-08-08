@@ -15,8 +15,9 @@ namespace VacationRental.Core.Models
         // Here we concatenate Bookings and PreparationTimes but make sure they are casted as IEnumerable<Schedule> so they can be used on the ScheduleSpecification
         private List<Schedule> _allExistingSchedules => Bookings.Select(b => (Schedule)b).Concat(PreparationTimes.Select(p => (Schedule)p)).ToList();
 
-        public Rental(int units, int preparationTimeInDays, List<Booking> bookings, List<PreparationTime> preparationTimes)
+        public Rental(int id, int units, int preparationTimeInDays, List<Booking> bookings, List<PreparationTime> preparationTimes)
         {
+            Id = id;
             Bookings = bookings;
             PreparationTimes = preparationTimes;
             PreparationTimeInDays = preparationTimeInDays;
@@ -38,14 +39,7 @@ namespace VacationRental.Core.Models
                 throw ex;
             }
 
-            var preparationTimeAfterBooking = new PreparationTime
-            {
-                Nights = booking.Rental.PreparationTimeInDays,
-                Rental = booking.Rental,
-                RentalId = booking.Rental.Id,
-                Start = booking.Start.AddDays(booking.Nights),
-                Unit = booking.Unit
-            };
+            var preparationTimeAfterBooking = new PreparationTime(booking.RentalId, booking.Start.AddDays(booking.Nights), booking.Rental.PreparationTimeInDays, booking.Unit);
 
             try
             {

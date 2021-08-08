@@ -12,5 +12,13 @@ namespace VacationRental.Core.Models
         public int Unit { get; set; }
 
         public Rental Rental { get; set; }
+
+        public Schedule(int rentalId, DateTime start, int nights, int unit)
+        {
+            RentalId = rentalId;
+            Start = start;
+            Nights = nights;
+            Unit = unit;
+        }
     }
 }
