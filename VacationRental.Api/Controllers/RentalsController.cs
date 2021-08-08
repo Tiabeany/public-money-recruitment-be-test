@@ -34,7 +34,19 @@ namespace VacationRental.Api.Controllers
         [HttpPost]
         public ResourceIdViewModel Post(RentalBindingModel model)
         {
-            var id = _rentalService.Add(new Rental(model.PreparationTimeInDays, model.Units, new List<Booking>(), new List<PreparationTime>()));
+            var id = _rentalService.Add(new Rental(0, model.Units, model.PreparationTimeInDays, new List<Booking>(), new List<PreparationTime>()));
+
+            return new ResourceIdViewModel
+            {
+                Id = id
+            };
+        }
+
+        [HttpPatch]
+        [Route("{rentalId:int}")]
+        public ResourceIdViewModel Patch(int rentalId, RentalBindingModel model)
+        {
+            var id = _rentalService.Update(new Rental(rentalId, model.Units, model.PreparationTimeInDays, new List<Booking>(), new List<PreparationTime>()));
 
             return new ResourceIdViewModel
             {
