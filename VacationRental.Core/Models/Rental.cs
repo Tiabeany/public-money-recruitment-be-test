@@ -38,7 +38,8 @@ namespace VacationRental.Core.Models
                 throw ex;
             }
 
-            var preparationTimeStart = booking.Start.AddDays(booking.Rental.PreparationTimeInDays);
+            // preparationTimeStart should be the last day of the booking
+            var preparationTimeStart = booking.Start.AddDays(booking.Nights);
             var preparationTimeAfterBooking = new PreparationTime(0, booking.RentalId, preparationTimeStart, 
                 booking.Rental.PreparationTimeInDays, booking.Unit);
 
