@@ -31,7 +31,21 @@ namespace VacationRental.Core.Models
         public void AddBooking(Booking booking)
         {
             var scheduleAvailable = new ScheduleAvailableSpecification(_allExistingSchedules);
-            if (!scheduleAvailable.IsSatisfiedBy(booking))
+            bool isScheduleAvailable = false;
+
+            for (int i = 0; i < Units; i++)
+            {
+                // Incrementing the booking.Units will make ScheduleAvailableSpecification test for each possible unit
+                booking.Unit++;
+                if (scheduleAvailable.IsSatisfiedBy(booking))
+                {
+                    isScheduleAvailable = true;
+                    break;
+                }
+            }
+
+            // If no schedule is available on any unit
+            if (!isScheduleAvailable)
             {
                 var ex = new ApplicationException("Not available");
                 ex.Data.Add("Booking with Invalid Schedule", "The selected dates are not available.");
@@ -40,6 +54,7 @@ namespace VacationRental.Core.Models
 
             // preparationTimeStart should be the last day of the booking
             var preparationTimeStart = booking.Start.AddDays(booking.Nights);
+            // preparationTimeAfterBooking will have the same Unit of the booking
             var preparationTimeAfterBooking = new PreparationTime(0, booking.RentalId, preparationTimeStart, 
                 booking.Rental.PreparationTimeInDays, booking.Unit);
 

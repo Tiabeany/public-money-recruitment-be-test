@@ -17,9 +17,8 @@ namespace VacationRental.Core.Specifications
 
         public override Expression<Func<Schedule, bool>> ToExpression()
         {
-            return schedule => !_existingSchedules.Any(existingBooking =>
-                        existingBooking.Unit == schedule.Unit
-                        && (existingBooking.Start <= schedule.Start.Date && existingBooking.Start.AddDays(existingBooking.Nights) > schedule.Start.Date)
+            return schedule => !_existingSchedules.Where(s => s.Unit == schedule.Unit).Any(existingBooking =>
+                        (existingBooking.Start <= schedule.Start.Date && existingBooking.Start.AddDays(existingBooking.Nights) > schedule.Start.Date)
                         || (existingBooking.Start < schedule.Start.AddDays(schedule.Nights) && existingBooking.Start.AddDays(existingBooking.Nights) >= schedule.Start.AddDays(schedule.Nights))
                         || (existingBooking.Start > schedule.Start && existingBooking.Start.AddDays(existingBooking.Nights) < schedule.Start.AddDays(schedule.Nights)));
         }

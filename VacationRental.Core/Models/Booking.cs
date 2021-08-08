@@ -7,5 +7,10 @@ namespace VacationRental.Core.Models
         public Booking(int id, int rentalId, DateTime start, int nights, int unit) : base(id, rentalId, start, nights, unit)
         {
         }
+
+        public void SetUnit(int unit)
+        {
+            Unit = unit;
+        }
     }
 }
