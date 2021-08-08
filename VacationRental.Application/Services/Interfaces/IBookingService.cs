@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using VacationRental.Core.Models;
+﻿using VacationRental.Core.Models;
 
 namespace VacationRental.Application.Services.Interfaces
 {

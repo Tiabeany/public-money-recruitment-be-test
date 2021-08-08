@@ -19,12 +19,9 @@ namespace VacationRental.Application.Services
 
         public Calendar Get(int rentalId, DateTime start, int nights)
         {
-            if (nights < 0)
-                throw new ApplicationException("Nights must be positive");
-
             var allRentalBookings = _bookingRepository.GetByRentalId(rentalId);
-
-            return CalendarFactory.CreateCalendar(allRentalBookings, nights, rentalId, start);
+            var rental = _rentalRepository.Get(rentalId);
+            return CalendarFactory.CreateCalendar(allRentalBookings, nights, rental, start);
         }
     }
 }
