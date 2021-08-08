@@ -8,12 +8,10 @@ namespace VacationRental.Infrastructure.Repositories
 {
     public class BookingRepository : IBookingRepository
     {
-        private readonly IDictionary<int, Rental> _rentals;
         private readonly IDictionary<int, Booking> _bookings;
 
-        public BookingRepository(IDictionary<int, Rental> rentals, IDictionary<int, Booking> bookings)
+        public BookingRepository(IDictionary<int, Booking> bookings)
         {
-            _rentals = rentals;
             _bookings = bookings;
         }
 
