@@ -5,6 +5,6 @@ namespace VacationRental.Core.Repositories
 {
     public interface IBookingRepository : IRepository<Booking>
     {
-        IEnumerable<Booking> GetByRentalId(int rentalId);
+        List<Booking> GetByRentalId(int rentalId);
     }
 }

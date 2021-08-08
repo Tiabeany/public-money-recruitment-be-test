@@ -30,9 +30,9 @@ namespace VacationRental.Infrastructure.Repositories
             return _bookings.Select(b => b.Value);
         }
 
-        public IEnumerable<Booking> GetByRentalId(int rentalId)
+        public List<Booking> GetByRentalId(int rentalId)
         {
-            return _bookings.Select(b => b.Value).Where(b => b.RentalId == rentalId);
+            return _bookings.Select(b => b.Value).Where(b => b.RentalId == rentalId).ToList();
         }
 
         public int Insert(Booking entity)
