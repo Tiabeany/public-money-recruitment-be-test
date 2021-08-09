@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
+using VacationRental.Api.Mappings;
 using VacationRental.Api.Models;
 using VacationRental.Application.Services;
 using VacationRental.Application.Services.Interfaces;
@@ -38,7 +40,18 @@ namespace VacationRental.Api
             services.AddTransient<IBookingRepository, BookingRepository>();
             services.AddTransient<IBookingService, BookingService>();
 
+            services.AddSingleton<IDictionary<int, PreparationTime>>(new Dictionary<int, PreparationTime>());
+            services.AddTransient<IPreparationTimeRepository, PreparationTimeRepository>();
+
             services.AddTransient<ICalendarService, CalendarService>();
+
+            var mappingConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new MappingProfile());
+            });
+
+            IMapper mapper = mappingConfig.CreateMapper();
+            services.AddSingleton(mapper);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

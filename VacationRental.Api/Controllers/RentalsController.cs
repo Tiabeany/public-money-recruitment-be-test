@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using VacationRental.Api.Models;
 using VacationRental.Application.Services.Interfaces;
@@ -11,10 +12,12 @@ namespace VacationRental.Api.Controllers
     public class RentalsController : ControllerBase
     {
         private readonly IRentalService _rentalService;
+        private readonly IMapper _mapper;
 
-        public RentalsController(IRentalService rentalService)
+        public RentalsController(IRentalService rentalService, IMapper mapper)
         {
             _rentalService = rentalService;
+            _mapper = mapper;
         }
 
         [HttpGet]
@@ -22,12 +25,7 @@ namespace VacationRental.Api.Controllers
         public RentalViewModel Get(int rentalId)
         {
             var rental = _rentalService.Get(rentalId);
-
-            return new RentalViewModel()
-            {
-                Id = rental.Id,
-                Units = rental.Units
-            };
+            return _mapper.Map<RentalViewModel>(rental);
         }
 
         [HttpPost]
