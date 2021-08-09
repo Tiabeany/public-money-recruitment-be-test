@@ -93,7 +93,8 @@ namespace VacationRental.Core.Models
             {
                 preparationTime.Nights += daysToAdd;
 
-                var scheduleAvailable = new ScheduleAvailableSpecification(_allExistingSchedules);
+                // Since we are updating PreparationTime we should only check if there is no Booking Schedule conflict
+                var scheduleAvailable = new ScheduleAvailableSpecification(Bookings.Select(b => (Schedule)b).ToList());
                 if (!scheduleAvailable.IsSatisfiedBy(preparationTime))
                 {
                     // reverting update
