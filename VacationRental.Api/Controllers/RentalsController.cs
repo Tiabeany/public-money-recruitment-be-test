@@ -1,7 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using VacationRental.Api.Models;
+using VacationRental.Application.Services.Interfaces;
+using VacationRental.Core.Models;
 
 namespace VacationRental.Api.Controllers
 {
@@ -9,35 +11,44 @@ namespace VacationRental.Api.Controllers
     [ApiController]
     public class RentalsController : ControllerBase
     {
-        private readonly IDictionary<int, RentalViewModel> _rentals;
+        private readonly IRentalService _rentalService;
+        private readonly IMapper _mapper;
 
-        public RentalsController(IDictionary<int, RentalViewModel> rentals)
+        public RentalsController(IRentalService rentalService, IMapper mapper)
         {
-            _rentals = rentals;
+            _rentalService = rentalService;
+            _mapper = mapper;
         }
 
         [HttpGet]
         [Route("{rentalId:int}")]
         public RentalViewModel Get(int rentalId)
         {
-            if (!_rentals.ContainsKey(rentalId))
-                throw new ApplicationException("Rental not found");
-
-            return _rentals[rentalId];
+            var rental = _rentalService.Get(rentalId);
+            return _mapper.Map<RentalViewModel>(rental);
         }
 
         [HttpPost]
         public ResourceIdViewModel Post(RentalBindingModel model)
         {
-            var key = new ResourceIdViewModel { Id = _rentals.Keys.Count + 1 };
+            var id = _rentalService.Add(new Rental(0, model.Units, model.PreparationTimeInDays, new List<Booking>(), new List<PreparationTime>()));
 
-            _rentals.Add(key.Id, new RentalViewModel
+            return new ResourceIdViewModel
             {
-                Id = key.Id,
-                Units = model.Units
-            });
+                Id = id
+            };
+        }
 
-            return key;
+        [HttpPut]
+        [Route("{rentalId:int}")]
+        public ResourceIdViewModel Put(int rentalId, RentalBindingModel model)
+        {
+            var id = _rentalService.Update(new Rental(rentalId, model.Units, model.PreparationTimeInDays, new List<Booking>(), new List<PreparationTime>()));
+
+            return new ResourceIdViewModel
+            {
+                Id = id
+            };
         }
     }
 }

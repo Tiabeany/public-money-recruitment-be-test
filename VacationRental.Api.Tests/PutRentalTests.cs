@@ -1,24 +1,24 @@
 ﻿using System;
-using System.Net;
+using System.Collections.Generic;
 using System.Net.Http;
-using System.Threading.Tasks;
+using System.Text;
 using VacationRental.Api.Models;
 using Xunit;
 
 namespace VacationRental.Api.Tests
 {
     [Collection("Integration")]
-    public class PostRentalTests
+    public class PutRentalTests
     {
         private readonly HttpClient _client;
 
-        public PostRentalTests(IntegrationFixture fixture)
+        public PutRentalTests(IntegrationFixture fixture)
         {
             _client = fixture.Client;
         }
 
         [Fact]
-        public async Task GivenCompleteRequest_WhenPostRental_ThenAGetReturnsTheCreatedRental()
+        public async void GivenCompleteRequest_WhenPutRental_ThenAGetReturnsTheUpdatedRental()
         {
             var request = new RentalBindingModel
             {
@@ -40,6 +40,22 @@ namespace VacationRental.Api.Tests
                 var getResult = await getResponse.Content.ReadAsAsync<RentalViewModel>();
                 Assert.Equal(request.Units, getResult.Units);
             }
+
+            ResourceIdViewModel putResult;
+            using (var putResponse = await _client.PutAsJsonAsync($"/api/v1/rentals/{postResult.Id}", request))
+            {
+                Assert.True(putResponse.IsSuccessStatusCode);
+                putResult = await putResponse.Content.ReadAsAsync<ResourceIdViewModel>();
+            }
+
+            using (var getResponse = await _client.GetAsync($"/api/v1/rentals/{putResult.Id}"))
+            {
+                Assert.True(getResponse.IsSuccessStatusCode);
+
+                var getResult = await getResponse.Content.ReadAsAsync<RentalViewModel>();
+                Assert.Equal(request.Units, getResult.Units);
+            }
+
         }
     }
 }

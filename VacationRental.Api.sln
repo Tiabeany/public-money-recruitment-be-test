@@ -7,6 +7,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VacationRental.Api", "Vacat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VacationRental.Api.Tests", "VacationRental.Api.Tests\VacationRental.Api.Tests.csproj", "{57FE6E13-7144-459F-BCA8-431087D3DAEE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VacationRental.Core", "VacationRental.Core\VacationRental.Core.csproj", "{70531280-617D-4852-A8A7-ADC31EE374E2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VacationRental.Infrastructure", "VacationRental.Infrastructure\VacationRental.Infrastructure.csproj", "{37D84EAC-34E4-4050-BFB3-2C270B268213}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VacationRental.Application", "VacationRental.Application\VacationRental.Application.csproj", "{5BDA6BA3-74F4-496A-8585-484947DE1EF6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VacationRental.Core.Tests", "VacationRental.Core.Tests\VacationRental.Core.Tests.csproj", "{F471F5F8-70C9-443F-98E2-729027F55936}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +29,22 @@ Global
 		{57FE6E13-7144-459F-BCA8-431087D3DAEE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{57FE6E13-7144-459F-BCA8-431087D3DAEE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{57FE6E13-7144-459F-BCA8-431087D3DAEE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{70531280-617D-4852-A8A7-ADC31EE374E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70531280-617D-4852-A8A7-ADC31EE374E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70531280-617D-4852-A8A7-ADC31EE374E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70531280-617D-4852-A8A7-ADC31EE374E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37D84EAC-34E4-4050-BFB3-2C270B268213}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37D84EAC-34E4-4050-BFB3-2C270B268213}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37D84EAC-34E4-4050-BFB3-2C270B268213}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37D84EAC-34E4-4050-BFB3-2C270B268213}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5BDA6BA3-74F4-496A-8585-484947DE1EF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5BDA6BA3-74F4-496A-8585-484947DE1EF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5BDA6BA3-74F4-496A-8585-484947DE1EF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5BDA6BA3-74F4-496A-8585-484947DE1EF6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F471F5F8-70C9-443F-98E2-729027F55936}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F471F5F8-70C9-443F-98E2-729027F55936}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F471F5F8-70C9-443F-98E2-729027F55936}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F471F5F8-70C9-443F-98E2-729027F55936}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

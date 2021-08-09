@@ -1,11 +1,18 @@
 ﻿using System.Collections.Generic;
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
+using VacationRental.Api.Mappings;
 using VacationRental.Api.Models;
+using VacationRental.Application.Services;
+using VacationRental.Application.Services.Interfaces;
+using VacationRental.Core.Models;
+using VacationRental.Core.Repositories;
+using VacationRental.Infrastructure.Repositories;
 
 namespace VacationRental.Api
 {
@@ -25,8 +32,26 @@ namespace VacationRental.Api
 
             services.AddSwaggerGen(opts => opts.SwaggerDoc("v1", new Info { Title = "Vacation rental information", Version = "v1" }));
 
-            services.AddSingleton<IDictionary<int, RentalViewModel>>(new Dictionary<int, RentalViewModel>());
-            services.AddSingleton<IDictionary<int, BookingViewModel>>(new Dictionary<int, BookingViewModel>());
+            services.AddSingleton<IDictionary<int, Rental>>(new Dictionary<int, Rental>());
+            services.AddTransient<IRentalRepository, RentalRepository>();
+            services.AddTransient<IRentalService, RentalService>();
+
+            services.AddSingleton<IDictionary<int, Booking>>(new Dictionary<int, Booking>());
+            services.AddTransient<IBookingRepository, BookingRepository>();
+            services.AddTransient<IBookingService, BookingService>();
+
+            services.AddSingleton<IDictionary<int, PreparationTime>>(new Dictionary<int, PreparationTime>());
+            services.AddTransient<IPreparationTimeRepository, PreparationTimeRepository>();
+
+            services.AddTransient<ICalendarService, CalendarService>();
+
+            var mappingConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new MappingProfile());
+            });
+
+            IMapper mapper = mappingConfig.CreateMapper();
+            services.AddSingleton(mapper);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
